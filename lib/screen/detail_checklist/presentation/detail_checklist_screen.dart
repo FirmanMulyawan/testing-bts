@@ -6,16 +6,20 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../components/base/base_view.dart';
 import '../../../components/config/app_const.dart';
 import '../../../components/config/app_style.dart';
-import 'widgets/add_checklist.dart';
-import 'home_controller.dart';
+import '../../../components/widgets/app_bar_widget.dart';
+import 'widgets/add_detail_checklist.dart';
+import 'detail_checklist_controller.dart';
 
-class HomeScreen extends BaseView<HomeController> {
-  const HomeScreen({super.key});
+class DetailChecklistScreen extends BaseView<DetailChecklistController> {
+  const DetailChecklistScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: const BaseAppBar(
+        title: 'Detail Todo',
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(80)),
@@ -39,7 +43,7 @@ class HomeScreen extends BaseView<HomeController> {
                   builder: (ctx) {
                     return SizedBox(
                       width: MediaQuery.of(context).size.width * 0.95,
-                      child: const AddChecklist(),
+                      child: const AddDetailChecklist(),
                     );
                   }).then((onValue) {
                 if (onValue == true) {
@@ -65,7 +69,7 @@ class HomeScreen extends BaseView<HomeController> {
                   // shrinkWrap: true,
                   // physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.all(0),
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   mainAxisSpacing: 14,
                   crossAxisSpacing: 4,
                   addRepaintBoundaries: false,
@@ -73,25 +77,40 @@ class HomeScreen extends BaseView<HomeController> {
                     return Card(
                       margin: const EdgeInsets.all(4),
                       child: ListTile(
-                        onTap: () => controller.toDetailChecklist(),
+                        onTap: () {},
                         contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
+                            const EdgeInsets.symmetric(horizontal: 15),
                         title: const Text('The title goes here'),
                         // subtitle: const Text('Subtitle here'),
-                        trailing: Skeleton.shade(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.delete_rounded,
-                              color: Colors.red,
-                              size: 30,
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Skeleton.shade(
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.grey,
+                                  size: 30,
+                                ),
+                                onPressed: () => controller.toEditChecklist(),
+                              ),
                             ),
-                            onPressed: () => controller.toDeleteChecklist(),
-                          ),
+                            Skeleton.shade(
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.delete_rounded,
+                                  color: Colors.red,
+                                  size: 30,
+                                ),
+                                onPressed: () => controller.toDeleteChecklist(),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
                   },
-                  itemCount: 10,
+                  itemCount: 3,
                 ),
               ))),
     );

@@ -16,4 +16,24 @@ abstract class BaseController extends GetxController {
       ),
     );
   }
+
+  showBaseDialogDoubleButton(
+      {String title = "",
+      dynamic message = "",
+      void Function()? onTapRightLoadingBtn,
+      titleLeftBtn = "",
+      titleRightBtn = "",
+      childWidget}) {
+    return Get.dialog(
+      DialogCustomWidget(
+        title: title,
+        decs: message,
+        titleLeftBtn: titleLeftBtn ?? "Cancel",
+        titleRightBtn: titleRightBtn ?? "Ok",
+        onTapLeftBtn: () => Get.back(),
+        onTapRightLoadingBtn: onTapRightLoadingBtn ?? () => Get.back(),
+        childWidget: childWidget,
+      ),
+    );
+  }
 }

@@ -5,23 +5,26 @@ import 'button_dialog_left_widget.dart';
 import 'button_dialog_right_widget.dart';
 
 class DialogCustomWidget extends StatelessWidget {
-  const DialogCustomWidget({
-    super.key,
-    required this.title,
-    required this.decs,
-    required this.titleLeftBtn,
-    required this.titleRightBtn,
-    this.onTapRightBtn,
-    this.onTapLeftBtn,
-  });
+  const DialogCustomWidget(
+      {super.key,
+      required this.title,
+      required this.decs,
+      required this.titleLeftBtn,
+      required this.titleRightBtn,
+      this.onTapRightBtn,
+      this.onTapLeftBtn,
+      this.onTapRightLoadingBtn,
+      this.childWidget});
 
   final String title;
   final String decs;
   final String titleLeftBtn;
   final String titleRightBtn;
+  final Widget? childWidget;
 
   final void Function()? onTapRightBtn;
   final void Function()? onTapLeftBtn;
+  final Function()? onTapRightLoadingBtn;
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +67,24 @@ class DialogCustomWidget extends StatelessWidget {
                       size: 18,
                     ),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    decs,
-                    textAlign: TextAlign.center,
-                    style: AppStyle.styleRegular(
-                      size: 14,
-                      textColor: const Color(0xFF667085),
-                    ),
-                  ),
+                  decs.isEmpty == false
+                      ? Column(
+                          children: [
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              decs,
+                              textAlign: TextAlign.center,
+                              style: AppStyle.styleRegular(
+                                size: 14,
+                                textColor: const Color(0xFF667085),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  childWidget ?? Container(),
                   const SizedBox(
                     height: 32,
                   ),
@@ -102,11 +112,11 @@ class DialogCustomWidget extends StatelessWidget {
                             width: 16,
                           ),
                           Expanded(
-                            child: ButtonDialogRightWidget(
-                              onTap: onTapRightBtn,
-                              title: titleRightBtn,
-                            ),
-                          )
+                              child: AppStyle.buttonPrimary(
+                                  width: double.infinity,
+                                  hasLoading: true,
+                                  title: titleRightBtn,
+                                  onTap: onTapRightLoadingBtn ?? () {}))
                         ],
                       );
                     },

@@ -15,6 +15,7 @@ dependencies:
   lottie: ^3.2.0
   cupertino_icons: ^1.0.8
   skeletonizer: ^1.4.3
+  flutter_staggered_grid_view: ^0.7.0
   intl: ^0.20.2
   email_validator: ^3.0.0
   flutter_svg: ^2.0.17

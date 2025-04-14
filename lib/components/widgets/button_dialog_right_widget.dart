@@ -21,11 +21,11 @@ class ButtonDialogRightWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: disableColor ?? const Color(0xFFE98C44),
+        color: disableColor ?? AppStyle.bluePrimary,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           width: 1,
-          color: disableColor ?? const Color(0xFFE98C44),
+          color: disableColor ?? AppStyle.bluePrimary,
         ),
       ),
       child: Material(

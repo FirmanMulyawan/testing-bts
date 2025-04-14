@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'components/api/api_service.dart';
 import 'components/config/app_const.dart';
 import 'components/config/app_route.dart';
-import 'components/config/app_style.dart';
 import 'components/config/app_theme.dart';
 import 'components/util/storage_util.dart';
 import 'components/util/network.dart';
