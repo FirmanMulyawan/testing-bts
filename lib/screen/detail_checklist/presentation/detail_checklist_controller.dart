@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../components/api/api_service.dart';
 import '../../../components/base/base_controller.dart';
+import '../../../components/config/app_route.dart';
 import '../../../components/config/app_style.dart';
 import '../../../components/util/storage_util.dart';
 
@@ -18,6 +20,10 @@ class DetailChecklistController extends BaseController {
   // void dispose() {
   //   super.dispose();
   // }
+
+  void toDetailItem() {
+    Get.toNamed(AppRoute.detailItemScreen);
+  }
 
   void toDeleteChecklist() {
     showBaseDialogDoubleButton(

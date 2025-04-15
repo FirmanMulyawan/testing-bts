@@ -77,7 +77,7 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
                     return Card(
                       margin: const EdgeInsets.all(4),
                       child: ListTile(
-                        onTap: () {},
+                        onTap: () => controller.toDetailItem(),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 15),
                         title: const Text('The title goes here'),
