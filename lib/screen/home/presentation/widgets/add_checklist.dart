@@ -82,8 +82,8 @@ class AddChecklist extends BaseView<AddChecklistController> {
                                       width: double.infinity,
                                       hasLoading: true,
                                       title: "Add Todo",
-                                      onTap: () {
-                                        controller.addTodo();
+                                      onTap: () async {
+                                        await controller.addTodo();
                                       }),
                                 ),
                               ],

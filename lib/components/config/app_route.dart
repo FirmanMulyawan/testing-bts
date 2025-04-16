@@ -10,9 +10,11 @@ import '../../screen/login/binding/login_binding.dart';
 import '../../screen/login/presentation/login_screen.dart';
 import '../../screen/register/binding/register_binding.dart';
 import '../../screen/register/presentation/register_screen.dart';
+import '../../screen/splash/splash_screen.dart';
 
 class AppRoute {
-  static const String defaultRoute = '/loginScreen';
+  static const String defaultRoute = '/';
+  static const String loginScreen = '/loginScreen';
   static const String notFound = '/notFound';
   static const String registerScreen = '/registerScreen';
   static const String homeScreen = '/homeScreen';
@@ -22,6 +24,10 @@ class AppRoute {
   static List<GetPage> pages = [
     GetPage(
       name: defaultRoute,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: loginScreen,
       page: () => const LoginScreen(),
       binding: LoginBinding(),
     ),

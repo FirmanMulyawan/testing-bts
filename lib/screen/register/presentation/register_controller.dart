@@ -66,16 +66,16 @@ class RegisterController extends BaseController {
     };
 
     try {
-      // final response = await _apiService
-      //     .apiRegister(params)
-      //     .then((value) => RegisterModel.fromJson(value));
-      // if (response.status == true) {
-      //   await showBaseDialog(
-      //       title: "Registrasi", message: "${response.message}");
-      Get.offAllNamed(AppRoute.defaultRoute);
-      // } else {
-      //   showBaseDialog(title: "Registrasi", message: "${response.message}");
-      // }
+      final response = await _apiService
+          .apiRegister(params)
+          .then((value) => RegisterResponseModel.fromJson(value));
+      if (response.statusCode == 2000) {
+        await showBaseDialog(
+            title: "Registrasi", message: "${response.message}");
+        Get.offAllNamed(AppRoute.loginScreen);
+      } else {
+        showBaseDialog(title: "Registrasi", message: "${response.message}");
+      }
     } on DioException catch (e) {
       _logger.e(e, stackTrace: e.stackTrace);
       _logger.i(e.response?.data);

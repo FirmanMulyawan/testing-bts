@@ -1,9 +1,8 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class AppConst {
   static String appName = "My App";
   static bool isDebuggable = true;
-  static String appUrl = "${dotenv.env['API_LINK']!}/api/";
+  // static String appUrl = dotenv.env['API_LINK']!;
+  static String appUrl = "http://94.74.86.174:8080/api";
 
   // icon
   static String iconBack = 'assets/icons/ic_back.svg';

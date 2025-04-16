@@ -8,7 +8,7 @@ import '../../../components/base/base_controller.dart';
 import '../../../components/config/app_route.dart';
 import '../../../components/config/app_style.dart';
 import '../../../components/util/storage_util.dart';
-// import '../model/login_model.dart';
+import '../model/login_model.dart';
 
 class LoginController extends BaseController {
   final _logger = Logger();
@@ -48,21 +48,19 @@ class LoginController extends BaseController {
         "password": passwordController.text
       };
       try {
-        Get.offAllNamed(AppRoute.homeScreen);
-
-        // final response = await _apiService
-        //     .apiLogin(params)
-        //     .then((value) => LoginModel.fromJson(value));
-        // if (response.data != null) {
-        //   final data = response.data;
-        //   await _storage.setLogin(true.toString());
-        //   await _storage.setToken(data.token!);
-        //   Get.offAllNamed(AppRoute.homeScreen);
-        // } else {
-        //   showBaseDialog(
-        //       title: "Login Gagal",
-        //       message: response.message ?? "Pastikan Email dan Password Benar");
-        // }
+        final response = await _apiService
+            .apiLogin(params)
+            .then((value) => LoginResponseModel.fromJson(value));
+        if (response.data != null) {
+          final data = response.data;
+          await _storage.setLogin(true.toString());
+          await _storage.setToken(data?.token ?? '');
+          Get.offAllNamed(AppRoute.homeScreen);
+        } else {
+          showBaseDialog(
+              title: "Login Gagal",
+              message: response.message ?? "Pastikan Email dan Password Benar");
+        }
       } on DioException catch (e) {
         _logger.e(e, stackTrace: e.stackTrace);
         _logger.i(e.response?.data);

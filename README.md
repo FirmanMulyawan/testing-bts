@@ -1,11 +1,11 @@
 ## Project Overview
 
-Nama Proyek: My App
-Target Platform: Android
-Bahasa Pemrograman: Dart
-Framework: Flutter
-State Management: Get x
-Flutter versi: 3.24.5
+- Nama Proyek: My App
+- Target Platform: Android
+- Bahasa Pemrograman: Dart
+- Framework: Flutter
+- State Management: Get x
+- Flutter versi: 3.24.5
 
 ## Library
 

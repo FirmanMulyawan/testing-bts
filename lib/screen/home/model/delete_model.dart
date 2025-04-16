@@ -1,13 +1,13 @@
-class RegisterResponseModel {
+class DeleteResponseModel {
   int? statusCode;
   String? message;
   String? errorMessage;
   String? data;
 
-  RegisterResponseModel(
+  DeleteResponseModel(
       {this.statusCode, this.message, this.errorMessage, this.data});
 
-  RegisterResponseModel.fromJson(Map<String, dynamic> json) {
+  DeleteResponseModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     message = json['message'];
     errorMessage = json['errorMessage'];

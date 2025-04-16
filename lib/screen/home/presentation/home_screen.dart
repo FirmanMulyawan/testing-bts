@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -82,63 +80,63 @@ class HomeScreen extends BaseView<HomeController> {
         ),
       ),
       body: SafeArea(
-          child: RefreshIndicator(
-              color: AppStyle.bluePrimary,
-              onRefresh: () {
-                return Future.value();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: AlignedGridView.count(
-                  // shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 14,
-                  crossAxisSpacing: 4,
-                  addRepaintBoundaries: false,
-                  itemBuilder: (ctx, index) {
-                    return Card(
-                      color: getColorFromIndex(index),
-                      margin: const EdgeInsets.all(4),
-                      child: ListTile(
-                        onTap: () => controller.toDetailChecklist(),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
-                        title: Text(
-                          'The title goes here',
-                          style: AppStyle.styleMedium(
-                            size: 14,
-                            textColor: AppStyle.white,
-                          ),
-                        ),
-                        // subtitle: const Text('Subtitle here'),
-                        trailing: Skeleton.shade(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.delete_rounded,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            onPressed: () => controller.toDeleteChecklist(),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 10,
-                ),
-              ))),
-    );
-  }
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: GetBuilder<HomeController>(builder: (ctrl) {
+          if (ctrl.isLoadingData == true) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return RefreshIndicator(
+            onRefresh: () async {
+              ctrl.getAllChecklist();
+            },
+            child: AlignedGridView.count(
+              // shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(0),
+              crossAxisCount: 2,
+              mainAxisSpacing: 14,
+              crossAxisSpacing: 4,
+              addRepaintBoundaries: false,
+              itemBuilder: (ctx, index) {
+                final item = ctrl.listChecklist?[index];
 
-  Color getColorFromIndex(int index) {
-    final Random random = Random(index);
-    return Color.fromARGB(
-      255,
-      random.nextInt(256),
-      random.nextInt(256),
-      random.nextInt(256),
+                return Card(
+                  color: item?.checklistCompletionStatus == true
+                      ? Colors.white
+                      : Colors.amber,
+                  margin: const EdgeInsets.all(4),
+                  child: ListTile(
+                    onTap: () => controller.toDetailChecklist(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    title: Text(
+                      item?.name ?? '-',
+                      style: AppStyle.styleMedium(
+                        size: 14,
+                        textColor: AppStyle.white,
+                      ),
+                    ),
+                    // subtitle: const Text('Subtitle here'),
+                    trailing: Skeleton.shade(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.delete_rounded,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () => controller.toDeleteChecklist(item?.id),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              itemCount: ctrl.listChecklist?.length,
+            ),
+          );
+        }),
+      )),
     );
   }
 }

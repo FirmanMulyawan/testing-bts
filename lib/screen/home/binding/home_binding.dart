@@ -7,6 +7,8 @@ class HomeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => HomeController(Get.find(), Get.find()));
-    Get.lazyPut(() => AddChecklistController());
+    Get.lazyPut(() => AddChecklistController(
+          Get.find(),
+        ));
   }
 }
