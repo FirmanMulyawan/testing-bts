@@ -24,7 +24,7 @@ class AddChecklistController extends BaseController {
   }
 
   Future<void> addTodo() async {
-    if (nameController.text.isEmpty) {
+    if (nameController.text.isNotEmpty) {
       final params = {
         "name": nameController.text,
       };

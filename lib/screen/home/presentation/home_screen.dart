@@ -69,7 +69,7 @@ class HomeScreen extends BaseView<HomeController> {
                     );
                   }).then((onValue) {
                 if (onValue == true) {
-                  // _controller.paginationListController.reset();
+                  controller.getAllChecklist();
                 }
               });
             },
