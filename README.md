@@ -1,16 +1,15 @@
-# myapp
+## Project Overview
 
-A new Flutter project.
+Nama Proyek: My App
+Target Platform: Android
+Bahasa Pemrograman: Dart
+Framework: Flutter
+State Management: Get x
+Flutter versi: 3.24.5
 
-## Getting Started
+## Library
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- GetX: ^4.7.2 => State management, routing, dan dependency injection yang ringan dan efisien
+- flutter_dotenv: ^5.2.1 => Mengelola environment variables dari file .env untuk konfigurasi API, key, dll.
+- dio: ^5.8.0+1 => HTTP client yang lebih cepat dan fleksibel dibanding http package bawaan Flutter.
+- flutter_staggered_grid_view: ^0.7.0 => digunakan di Flutter untuk membuat tampilan grid yang fleksibel dan dinamis

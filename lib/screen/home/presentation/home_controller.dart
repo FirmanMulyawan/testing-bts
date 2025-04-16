@@ -25,6 +25,11 @@ class HomeController extends BaseController {
     Get.toNamed(AppRoute.detailChecklistScreen);
   }
 
+  void onLogoutClick() {
+    _storage.logout();
+    Get.offNamedUntil(AppRoute.defaultRoute, (route) => false);
+  }
+
   void toDeleteChecklist() {
     showBaseDialogDoubleButton(
         title: "Hapus Todo",

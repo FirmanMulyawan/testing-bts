@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../components/base/base_view.dart';
@@ -65,52 +64,49 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: AlignedGridView.count(
-                  // shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  crossAxisCount: 1,
-                  mainAxisSpacing: 14,
-                  crossAxisSpacing: 4,
-                  addRepaintBoundaries: false,
-                  itemBuilder: (ctx, index) {
-                    return Card(
-                      margin: const EdgeInsets.all(4),
-                      child: ListTile(
-                        onTap: () => controller.toDetailItem(),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                        title: const Text('The title goes here'),
-                        // subtitle: const Text('Subtitle here'),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Skeleton.shade(
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.grey,
-                                  size: 30,
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Card(
+                        margin: const EdgeInsets.all(4),
+                        child: ListTile(
+                          onTap: () => controller.toDetailItem(),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 15),
+                          title: const Text('The title goes here'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Skeleton.shade(
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.grey,
+                                    size: 30,
+                                  ),
+                                  onPressed: () => controller.toEditChecklist(),
                                 ),
-                                onPressed: () => controller.toEditChecklist(),
                               ),
-                            ),
-                            Skeleton.shade(
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.delete_rounded,
-                                  color: Colors.red,
-                                  size: 30,
+                              Skeleton.shade(
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.delete_rounded,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                                  onPressed: () =>
+                                      controller.toDeleteChecklist(),
                                 ),
-                                onPressed: () => controller.toDeleteChecklist(),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
                   },
-                  itemCount: 3,
                 ),
               ))),
     );
