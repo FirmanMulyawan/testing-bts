@@ -1,25 +1,54 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../../../components/api/api_service.dart';
 import '../../../components/base/base_controller.dart';
 import '../../../components/config/app_route.dart';
 import '../../../components/config/app_style.dart';
-import '../../../components/util/storage_util.dart';
+import '../model/detail_checklist_model.dart';
 
 class DetailChecklistController extends BaseController {
+  final _logger = Logger();
   bool isInvisibleVisiblePassword = true;
   final ApiService _apiService;
-  final StorageUtil _storage;
 
   final itemNameController = TextEditingController();
+  final argument = Get.arguments;
+  int? checklistId;
+  bool isLoadingData = false;
+  final List<DataItem>? listChecklistItem = [];
 
-  DetailChecklistController(this._apiService, this._storage);
+  DetailChecklistController(this._apiService);
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+  @override
+  void onInit() {
+    if (argument != null) {
+      checklistId = argument['checklistId'];
+      apiGetAllChecklistItem(checklistId);
+    }
+    super.onInit();
+  }
+
+  Future<void> apiGetAllChecklistItem(int? checklistId) async {
+    isLoadingData = true;
+    update();
+    try {
+      final res = await _apiService
+          .apiGetAllChecklistItem(checklistId: checklistId ?? 0)
+          .then((value) {
+        return GetChecklistItemResponse.fromJson(value);
+      });
+      listChecklistItem?.assignAll(res.data ?? []);
+      update();
+    } on DioException catch (e) {
+      _logger.e(e, stackTrace: e.stackTrace);
+      _logger.i(e.response?.data);
+    }
+    isLoadingData = false;
+    update();
+  }
 
   void toDetailItem() {
     Get.toNamed(AppRoute.detailItemScreen);

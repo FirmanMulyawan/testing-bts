@@ -46,8 +46,12 @@ class HomeController extends BaseController {
     update();
   }
 
-  void toDetailChecklist() {
-    Get.toNamed(AppRoute.detailChecklistScreen);
+  void toDetailChecklist(int? checklistId) {
+    var dataArg = {
+      "checklistId": checklistId,
+    };
+
+    Get.toNamed(AppRoute.detailChecklistScreen, arguments: dataArg);
   }
 
   void onLogoutClick() {

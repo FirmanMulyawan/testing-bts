@@ -109,7 +109,7 @@ class HomeScreen extends BaseView<HomeController> {
                       : Colors.amber,
                   margin: const EdgeInsets.all(4),
                   child: ListTile(
-                    onTap: () => controller.toDetailChecklist(),
+                    onTap: () => controller.toDetailChecklist(item?.id),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                     title: Text(
                       item?.name ?? '-',

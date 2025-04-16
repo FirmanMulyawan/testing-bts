@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../components/base/base_view.dart';
 import '../../../components/config/app_const.dart';
-import '../../../components/config/app_style.dart';
 import '../../../components/widgets/app_bar_widget.dart';
 import 'widgets/add_detail_checklist.dart';
 import 'detail_checklist_controller.dart';
@@ -57,58 +57,67 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
         ),
       ),
       body: SafeArea(
-          child: RefreshIndicator(
-              color: AppStyle.bluePrimary,
-              onRefresh: () {
-                return Future.value();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 14),
-                      child: Card(
-                        margin: const EdgeInsets.all(4),
-                        child: ListTile(
-                          onTap: () => controller.toDetailItem(),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 15),
-                          title: const Text('The title goes here'),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Skeleton.shade(
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.grey,
-                                    size: 30,
-                                  ),
-                                  onPressed: () => controller.toEditChecklist(),
-                                ),
-                              ),
-                              Skeleton.shade(
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete_rounded,
-                                    color: Colors.red,
-                                    size: 30,
-                                  ),
-                                  onPressed: () =>
-                                      controller.toDeleteChecklist(),
-                                ),
-                              ),
-                            ],
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: GetBuilder<DetailChecklistController>(builder: (ctrl) {
+          if (ctrl.isLoadingData == true) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (ctrl.listChecklistItem?.isEmpty == true) {
+            return const Text("data kosong");
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            itemCount: ctrl.listChecklistItem?.length,
+            itemBuilder: (context, index) {
+              final item = ctrl.listChecklistItem?[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: Card(
+                  color: item?.itemCompletionStatus == true
+                      ? Colors.white
+                      : Colors.amber,
+                  margin: const EdgeInsets.all(4),
+                  child: ListTile(
+                    onTap: () => controller.toDetailItem(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                    title: Text(item?.name ?? ''),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Skeleton.shade(
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                              size: 30,
+                            ),
+                            onPressed: () => controller.toEditChecklist(),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                        Skeleton.shade(
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.delete_rounded,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                            onPressed: () => controller.toDeleteChecklist(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ))),
+              );
+            },
+          );
+        }),
+      )),
     );
   }
 }
