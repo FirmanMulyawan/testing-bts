@@ -96,7 +96,8 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
                               color: Colors.grey,
                               size: 30,
                             ),
-                            onPressed: () => controller.toEditChecklist(),
+                            onPressed: () =>
+                                controller.toEditChecklist(item?.id),
                           ),
                         ),
                         Skeleton.shade(
@@ -106,7 +107,8 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
                               color: Colors.red,
                               size: 30,
                             ),
-                            onPressed: () => controller.toDeleteChecklist(),
+                            onPressed: () =>
+                                controller.toDeleteChecklist(item?.id),
                           ),
                         ),
                       ],

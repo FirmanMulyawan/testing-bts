@@ -14,6 +14,6 @@ mixin ApiChecklist on BaseDioDataSource {
 
   Future<String> apiDeleteChecklistId({required int checklistId}) async {
     String path = '/checklist/$checklistId';
-    return delete<String>(path).load();
+    return delete<String>(path).load(); // belum
   }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../../components/api/api_service.dart';
+import '../../../components/api/models/request/add_checklist_item.request.dart';
 import '../../../components/base/base_controller.dart';
 import '../../../components/config/app_route.dart';
 import '../../../components/config/app_style.dart';
@@ -54,16 +55,24 @@ class DetailChecklistController extends BaseController {
     Get.toNamed(AppRoute.detailItemScreen);
   }
 
-  void toDeleteChecklist() {
+  void toDeleteChecklist(int? id) {
     showBaseDialogDoubleButton(
         title: "Hapus Checklist",
         message: "Anda yakin ingin menghapus Checklist ini",
         titleLeftBtn: 'Cancel',
         titleRightBtn: 'Delete',
-        onTapRightLoadingBtn: () {});
+        onTapRightLoadingBtn: () async {
+          await _apiService
+              .apiDeleteChecklistItemById(
+                  checklistId: checklistId ?? 0, checklistItemId: id ?? 0)
+              .then((value) {
+            Get.back();
+            apiGetAllChecklistItem(checklistId);
+          });
+        });
   }
 
-  void toEditChecklist() {
+  void toEditChecklist(int? id) {
     showBaseDialogDoubleButton(
         title: "Edit Checklist",
         titleLeftBtn: 'Cancel',
@@ -87,6 +96,23 @@ class DetailChecklistController extends BaseController {
             )
           ],
         ),
-        onTapRightLoadingBtn: () {});
+        onTapRightLoadingBtn: () async {
+          if (itemNameController.text.isNotEmpty) {
+            await _apiService
+                .apiRenameChecklistItemById(
+                    AddChecklistItemRequest(
+                      itemName: itemNameController.text,
+                    ),
+                    checklistId: checklistId ?? 0,
+                    checklistItemId: id ?? 0)
+                .then((value) {
+              Get.back();
+              apiGetAllChecklistItem(checklistId);
+            });
+          } else {
+            showBaseDialog(
+                title: "Tambah Item", message: "Data tidak boleh kosong");
+          }
+        });
   }
 }
