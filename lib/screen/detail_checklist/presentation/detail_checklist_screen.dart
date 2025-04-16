@@ -46,7 +46,7 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
                     );
                   }).then((onValue) {
                 if (onValue == true) {
-                  // _controller.paginationListController.reset();
+                  controller.apiGetAllChecklistItem(controller.checklistId);
                 }
               });
             },

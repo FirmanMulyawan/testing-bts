@@ -7,6 +7,6 @@ class DetailChecklistBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => DetailChecklistController(Get.find()));
-    Get.lazyPut(() => AddDetailChecklistController());
+    Get.lazyPut(() => AddDetailChecklistController(Get.find()));
   }
 }
