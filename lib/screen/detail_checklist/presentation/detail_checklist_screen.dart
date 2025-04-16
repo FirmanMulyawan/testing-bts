@@ -83,7 +83,7 @@ class DetailChecklistScreen extends BaseView<DetailChecklistController> {
                       : Colors.amber,
                   margin: const EdgeInsets.all(4),
                   child: ListTile(
-                    onTap: () => controller.toDetailItem(),
+                    onTap: () => controller.toDetailItem(item?.id),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     title: Text(item?.name ?? ''),
                     trailing: Row(

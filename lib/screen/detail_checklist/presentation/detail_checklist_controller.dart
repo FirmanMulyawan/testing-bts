@@ -51,8 +51,10 @@ class DetailChecklistController extends BaseController {
     update();
   }
 
-  void toDetailItem() {
-    Get.toNamed(AppRoute.detailItemScreen);
+  void toDetailItem(int? id) {
+    var dataArg = {"checklistId": checklistId, "checklistItemId": id ?? 0};
+
+    Get.toNamed(AppRoute.detailItemScreen, arguments: dataArg);
   }
 
   void toDeleteChecklist(int? id) {

@@ -1,16 +1,54 @@
+import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+
 import '../../../components/api/api_service.dart';
 import '../../../components/base/base_controller.dart';
-import '../../../components/util/storage_util.dart';
+import '../model/detail_item_model.dart';
 
 class DetailItemController extends BaseController {
-  bool isInvisibleVisiblePassword = true;
+  final _logger = Logger();
+
   final ApiService _apiService;
-  final StorageUtil _storage;
+  final argument = Get.arguments;
 
-  DetailItemController(this._apiService, this._storage);
+  int? checklistId;
+  int? checklistItemId;
+  bool isLoadingData = false;
+  DataItemDetail? dataItemDetail;
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
+  DetailItemController(this._apiService);
+
+  @override
+  void onInit() {
+    if (argument != null) {
+      checklistId = argument['checklistId'];
+      checklistItemId = argument['checklistItemId'];
+
+      apiGetChecklistItemById(checklistId, checklistItemId);
+    }
+    super.onInit();
+  }
+
+  Future<void> apiGetChecklistItemById(
+      int? checklistId, int? checklistItemId) async {
+    isLoadingData = true;
+    update();
+    try {
+      final res = await _apiService
+          .apiGetChecklistItemById(
+              checklistId: checklistId ?? 0,
+              checklistItemId: checklistItemId ?? 0)
+          .then((value) {
+        return GetChecklistItemByIdResponse.fromJson(value);
+      });
+      dataItemDetail = res.data;
+      update();
+    } on DioException catch (e) {
+      _logger.e(e, stackTrace: e.stackTrace);
+      _logger.i(e.response?.data);
+    }
+    isLoadingData = false;
+    update();
+  }
 }
